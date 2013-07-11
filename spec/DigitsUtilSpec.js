@@ -16,4 +16,13 @@ describe("DigitsUtil", function() {
 		expect(DigitsUtil.compare(1934, 1256)).toEqual("1A0B");
 		expect(DigitsUtil.compare(1234, 1356)).toEqual("1A1B");
 	});
+
+	it("should random a four digits number", function(){
+		expect(DigitsUtil.random().toString().length).toEqual(4);
+	});
+
+	it("should random a number which has distinct digits", function(){
+		expect(DigitsUtilHelper.isEveryDigitsDistinct(DigitsUtil.random())).toBe(true);
+	});
+
 });
