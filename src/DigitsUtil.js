@@ -4,7 +4,8 @@ DigitsUtil.compare = function(first_number, second_number) {
 	if (first_number == second_number) {
 		return "4A0B";
 	}
-
+	alert(typeof first_number);
+	alert(typeof second_number);
 	var sameDigitsAndSamePositionCount = 0,
 		sameDigitsButWrongPositionCount = 0,
 		first_number_text = first_number.toString(),
