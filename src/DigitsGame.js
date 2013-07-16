@@ -13,17 +13,36 @@ DigitsGame.prototype.init = function() {
 	};
 }
 
+DigitsGame.prototype.judge= function(inputNumber) {
+	this.count++;
+	if (DigitsGuess.guess(inputNumber,this.targetNumber) === "4A0B" && this.count < this.maxCount) {
+		return this.statements.win;
+	} else if (DigitsGuess.guess(inputNumber,this.targetNumber) !== "4A0B" && this.count < this.maxCount) {
+		return this.statements.going;
+	} else if (this.count >= this.maxCount) {
+		return this.statements.lose;
+	} else {	
+		throw "how can you be here?!"
+	}
+}
+
 DigitsGame.prototype.run= function() {
+	var result;
 	for (var i = 0; i < arguments.length; i++) {
-		
-		if (arguments[i] == this.targetNumber) {
-			return this.statements.win;
-		} else {
-			if (this.count >= this.maxCount) {
-				return this.statements.lose;
-			} else {
-				return this.statements.going;
-			}
-		}
+		result = this.judge(arguments[i]);
+		if (result !== this.statements.going) {
+			return result;
+		} 
 	};
+	return this.statements.going;
+}
+
+DigitsGame.prototype.reset= function() {
+	this.count = 0;
+	return this;
+}
+
+DigitsGame.prototype.runAgain = function() {
+	this.reset();
+	return this.run.apply(this, arguments);
 }
