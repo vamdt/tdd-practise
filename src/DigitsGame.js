@@ -13,20 +13,29 @@ DigitsGame.prototype.init = function() {
 	};
 }
 
-DigitsGame.prototype.judge= function(inputNumber) {
+DigitsGame.prototype.isGuessRight = function(inputNumber) {
+	return DigitsGuess.guess(inputNumber, this.targetNumber) === "4A0B";
+}
+
+DigitsGame.prototype.canPlay = function() {
+	return this.count < this.maxCount;
+}
+
+DigitsGame.prototype.judge = function(inputNumber) {
+
 	this.count++;
-	if (DigitsGuess.guess(inputNumber,this.targetNumber) === "4A0B" && this.count < this.maxCount) {
+	if (this.isGuessRight(inputNumber) && this.canPlay()) {
 		return this.statements.win;
-	} else if (DigitsGuess.guess(inputNumber,this.targetNumber) !== "4A0B" && this.count < this.maxCount) {
+	} else if (!this.isGuessRight(inputNumber) && this.canPlay()) {
 		return this.statements.going;
-	} else if (this.count >= this.maxCount) {
+	} else if (!this.canPlay()) {
 		return this.statements.lose;
 	} else {	
 		throw "how can you be here?!"
 	}
 }
 
-DigitsGame.prototype.run= function() {
+DigitsGame.prototype.run = function() {
 	var result;
 	for (var i = 0; i < arguments.length; i++) {
 		result = this.judge(arguments[i]);
